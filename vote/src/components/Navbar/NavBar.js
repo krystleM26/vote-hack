@@ -18,6 +18,7 @@ const NavBar = () => {
 
       </div>
        <img src='' alt='' />
+       
 
 
     </div>
