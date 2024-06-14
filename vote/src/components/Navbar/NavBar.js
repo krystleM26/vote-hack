@@ -1,15 +1,18 @@
 import React from 'react'
 import './navbar.css'
+import dark_mode from '../../assets/day-and-night.png'
+import search_icon from '../../assets/search.png'
 
 const NavBar = () => {
   return (
     <div className='navbar'>
       <img src=" " alt='' className='logo' />
       <ul>
-        <li>Hone</li>
+        <li>Home</li>
         <li>About</li>
         <li>News</li>
         <li>Game</li>
+        <li>Account</li>
       </ul>
 
       <div className='search-box'>
@@ -17,8 +20,8 @@ const NavBar = () => {
         <img src='' alt='' />
 
       </div>
-       <img src='' alt='' />
-       
+       <img src='' alt='' className='toggle-icon'/>
+
 
 
     </div>
