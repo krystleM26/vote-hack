@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar/NavBar'
 import './App.css'
 import Quiz from './components/Quiz/Quiz'
@@ -14,17 +15,30 @@ const App = () => {
 
 
   return (
-  
+    <Router>
+      
       <div className={`container ${theme}`}>
         <Navbar  theme={theme} setTheme={setTheme} />
-        <Quiz />
-        <News />
-        <Account />
-        <About />
+        <Routes>
+
+        <Route path="/quiz" component={Quiz} />
+        <Route path="/news" component={News} />
+        <Route path="/accounr" component={Account} />
+        <Route path="/about" component={About} />
+        <Route path="/" element={<Home />} />
+       
+        </Routes>
       </div>
+    </Router>
+  
     
 
   )
 }
+const Home = () => (
+  <div>
+    <h1>Welcome to the Home Page</h1>
+  </div>
+);
 
 export default App
