@@ -21,10 +21,10 @@ const App = () => {
         <Navbar  theme={theme} setTheme={setTheme} />
         <Routes>
 
-        <Route path="/quiz" component={<Quiz /> } />
-        <Route path="/news" component={<News />} />
-        <Route path="/accounr" component={<Account />} />
-        <Route path="/about" component={<About />} />
+        <Route path="/quiz" element={<Quiz /> } />
+        <Route path="/news" element={<News />} />
+        <Route path="/accounr" element={<Account />} />
+        <Route path="/about" element={<About />} />
         <Route path="/" element={<Home />} />
        
         </Routes>
