@@ -2,6 +2,8 @@ import React from 'react'
 
 export default function News() {
   return (
-    <div>News</div>
+    <div>
+        <h1>News Page</h1>
+    </div>
   )
 }

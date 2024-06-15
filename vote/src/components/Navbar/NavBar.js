@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import './navbar.css'
 import ballot from '../../assets/ballot.png'
 import dark_mode from '../../assets/day-and-night.png'
@@ -19,11 +20,12 @@ const NavBar = ({ theme, setTheme }) => {
     <div className='navbar'>
       <img src={ballot} alt='' className='logo' />
       <ul>
-        <li>Home</li>
-        <li>About</li>
-        <li>News</li>
-        <li>Game</li>
-        <li>Account</li>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/about">About</Link></li>
+        <li><Link to="/news">News</Link></li>
+        <li><Link to="/quiz">Quiz</Link></li>
+        <li><Link to="/account">Account</Link></li>
+        
       </ul>
 
       <div className='search-box'>
