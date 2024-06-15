@@ -9,5 +9,10 @@
 .container{
     width: 100vw;
     height: 100vh;
-    background-color:  #ced8ff;
+    background-color:  #F5F5F5;
+    transition: 0.5s;
+}
+
+.container.dark{
+   background: #222; 
 }

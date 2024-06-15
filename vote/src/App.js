@@ -1,14 +1,20 @@
-import { BrowserRouter } from 'react-router-dom'
+import React, { useState } from 'react'
 import Navbar from './components/Navbar/NavBar'
+import './App.css'
 
 const App = () => {
+
+  const [theme, setTheme] = useState('light')
+
+
+
   return (
-    <BrowserRouter>
-      <div className='container'>
-        <Navbar />
+  
+      <div className={`container ${theme}`}>
+        <Navbar  theme={theme} setTheme={setTheme} />
       </div>
     
-    </BrowserRouter>
+
   )
 }
 
