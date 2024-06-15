@@ -7,29 +7,41 @@ const Quiz = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchQuiz = () => {
-            const url = 'https://www.britannica.com/quiz/voting-for-the-us-president';
+        const fetchQuiz = async () => {
+            try {
+                const response = await fetch('http://localhost:4000/quiz', {
+                    headers: {
+                        'Content-Type': 'text/html',
+                    }
+                });
+                if(!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const html = await response.text()
+                console.log('html', html);
 
-            fetch(url)
-             .then(response => response.text())
-             .then(html => {
                 const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
+                const doc = parser.parseFromString(html, 'text/html')
+            
+            
 
-                const questions = doc.querySelectorAll('eb-16RLBn'); // Update selector as needed
+
+            
+
+                const questions = doc.querySelectorAll('.quiz-question'); // Update selector as needed
                 const quizData = [];
 
                 questions.forEach(questionElement => {
-                    const questionText = questionElement.querySelector('eb-16RLBn.text').textContent.trim()
-                    const options = [...questionElement.querySelectorAll('eb-16RLBn.strong')].map(option => option.textContent.trim());
+                    const questionText = questionElement.querySelector('h2').textContent.trim()
+                    const options = [...questionElement.querySelectorAll('li')].map(option => option.textContent.trim());
                     quizData.push({question: questionText, options });
                 })
                 setQuiz(quizData)
-             })
-             .catch(error => {
+             }
+              catch(error) {
                 console.error('Error fetching the quiz', error);
                 setError('Failed to fetch quiz data.')
-             })
+             }
         };
         fetchQuiz();
     }, []);
@@ -52,6 +64,8 @@ const Quiz = () => {
 
   return (
     <div className='quiz-container'>
+        <div className='quiz-question'>
+
            <h1>Quiz</h1>
            <hr />
         
@@ -63,6 +77,7 @@ const Quiz = () => {
                 
                 ))}
             </ul>
+            </div>
 
            
         </div>
