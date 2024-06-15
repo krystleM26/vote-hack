@@ -22,18 +22,7 @@
     font-weight: 500;
 }
 
-.quiz-container ul li {
-    display: flex;
-    align-items: center;
-    height: 70 px;
-    padding-left: 15px;
-    border: 1px solid #686868;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    font-size: 20px;
-    cursor: pointer;
 
-}
 
 .quiz-container button{
     align-items: center;
