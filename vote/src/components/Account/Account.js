@@ -1,11 +1,49 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react';
+import './account.css'
+const Login = ({ handleLogin }) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-export default class Account extends Component {
-  render() {
-    return (
-      <div>
-        <h1>Account Page</h1>
-      </div>
-    )
-  }
-}
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Here, you would typically send the username and password to your backend for authentication
+    handleLogin(username, password);
+  };
+
+  return (
+    <div className='login-container'>
+      <h2>Login</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="username">Username:</label>
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={handleUsernameChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={handlePasswordChange}
+          />
+        </div>
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  );
+};
+
+export default Login;
