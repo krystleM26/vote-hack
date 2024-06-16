@@ -6,16 +6,11 @@ const AboutPage = () => {
     <div className="about-page">
       <h1>About Us</h1>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ornare libero eget
-        ante malesuada, a rhoncus magna tempor. Cras aliquet, ligula a dapibus semper,
-        nulla nunc tempus urna, id fermentum ex purus a magna.
+        We are Voters Hub a place where you can learn about the polls, test your presidential knowledge and more.
       </p>
       <h2>Our Mission</h2>
       <p>
-        Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia
-        Curae; Duis hendrerit tellus vel leo feugiat, non imperdiet nisi posuere.
-        Suspendisse potenti. Proin vitae leo vel ipsum faucibus vestibulum sit amet sed
-        lorem.
+       To help voter and potential voters like yourself get the most accurate data you need to make the best choices during the election.
       </p>
       <h2>Our Team</h2>
       <p>
@@ -26,10 +21,9 @@ const AboutPage = () => {
         Curae;
       </p>
       <ul>
-        <li>John Doe - Founder & CEO</li>
-        <li>Jane Smith - Lead Developer</li>
-        <li>Michael Johnson - UI/UX Designer</li>
-        <li>Emily Brown - Marketing Manager</li>
+        
+        <li>Krystle Mitchell - Developer</li>
+        
       </ul>
       <h2>Contact Us</h2>
       <p>
@@ -38,8 +32,8 @@ const AboutPage = () => {
         condimentum. Nullam ac diam vitae eros scelerisque volutpat a eget leo.
       </p>
       <p>
-        Have questions or feedback? Feel free to reach out to us at{' '}
-        <a href="mailto:info@example.com">info@example.com</a>.
+        Have questions or feedback? Feel free to reach out to us at ** Please Note the email is a demo**{' '}
+        <a href="mailto:info@example.com">info@example.com</a>. 
       </p>
     </div>
   );

@@ -37,7 +37,12 @@ const App = () => {
 }
 const Home = () => (
   <div>
-    <h1>Welcome to the Home Page</h1>
+    <h1>Welcome to Voters Hub</h1>
+    <p> Learn about us </p>
+    <p> Test Your presidential knowledge </p>
+    <p> Get the latest poll data and election news </p>
+
+ 
   </div>
 );
 
