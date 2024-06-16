@@ -1,102 +1,135 @@
-import React, {useState, useEffect} from 'react'
-import axios from 'axios'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import DOMPurify from 'dompurify';
-import style from './quiz.css'
-
+import './quiz.css';
 
 const Quiz = () => {
-    const [quiz, setQuiz] = useState([]);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [activeQuestion, setActiveQuestion] = useState(0);
-    
+  const [quiz, setQuiz] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [activeQuestion, setActiveQuestion] = useState(0);
+  const [score, setScore] = useState(0);
+  const [userAnswer, setUserAnswer] = useState(null);
+  const [isAnswered, setIsAnswered] = useState(false);
 
-    useEffect(() => {
-        const fetchQuiz = async () => {
-            try {
-                const response = await axios.get('http://localhost:4000/quiz', {
-                    headers: {
-                        'Content-Type': 'text/html',
-                    },
-                    responseType: 'text'
-                });
+  useEffect(() => {
+    const fetchQuiz = async () => {
+      try {
+        const response = await axios.get('http://localhost:4000/quiz', {
+          headers: {
+            'Content-Type': 'text/html',
+          },
+          responseType: 'text',
+        });
 
-                const html = response.data
-                const sanitizedHtml = DOMPurify.sanitize(html)
+        const html = response.data;
+        const sanitizedHtml = DOMPurify.sanitize(html);
 
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                
-                // // Select the specific element
-                const specificElement = doc.querySelector('#content .ui-hidden dl');
-                // console.log(specificElement)
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(sanitizedHtml, 'text/html');
 
-                // Select all <dl> elements
-                const dls = doc.querySelectorAll('#content .ui-hidden dl');
-                console.log('dls',dls)
+        const dls = doc.querySelectorAll('.ui-hidden dl');
 
-                // // Initialize an empty array to hold the questions and answers
-                const qaArray = [];
+        const qaArray = [];
 
-                // Loop through each <dl> element
-                dls.forEach(dl => {
-                // Get the <dt> and <dd> elements
-                const dt = dl.querySelector('dt');
-                const dd = dl.querySelector('dd');
+        dls.forEach((dl) => {
+          const dt = dl.querySelector('dt');
+          const dd = dl.querySelector('dd');
 
-                // Extract the text content and remove the "Question: " and "Answer: " prefixes
-                const question = dt.textContent.replace('Question: ', '').trim();
-                const answer = dd.textContent.replace('Answer: ', '').trim();
+          const question = dt.textContent.replace('Question: ', '').trim();
+          const answer = dd.textContent.replace('Answer: ', '').trim();
 
-                // Add the question and answer to the array as an object
-                qaArray.push({ question, answer });
-                });
-                setQuiz(qaArray)
+          const choices = [answer, 'Option 2', 'Option 3', 'Option 4'].sort(() => Math.random() - 0.5);
 
+          qaArray.push({ question, answer, choices });
+        });
 
-                setLoading(false)
+        setQuiz(qaArray);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching the quiz', error);
+        setError('Failed to fetch quiz data.');
+        setLoading(false);
+      }
+    };
 
-            } catch (error) {
-                console.error('Error fetching the quiz', error);
-                setError('Failed to fetch quiz data.');
-                setLoading(false);
-            }
-        };
-            
+    fetchQuiz();
+  }, []);
 
+  const handleChoiceSelection = (choice) => {
+    if (isAnswered) return;
 
-               
-
-               
-        fetchQuiz();
-       
-    }, []);      
-
-    if (loading) {
-        return <div className=''><p>Loading Quiz...</p></div>
+    setUserAnswer(choice);
+    setIsAnswered(true);
+    if (choice === quiz[activeQuestion].answer) {
+      setScore(score + 1);
     }
-    if(error){
-        return <div className='quiz-container'><p>{error}</p></div>
-    }
+  };
 
-   
+  const handleNextQuestion = () => {
+    setActiveQuestion((prev) => (prev + 1 < quiz.length ? prev + 1 : prev));
+    setUserAnswer(null);
+    setIsAnswered(false);
+  };
 
-  console.log('quizState',quiz)
+  const handlePrevQuestion = () => {
+    setActiveQuestion((prev) => (prev - 1 >= 0 ? prev - 1 : prev));
+    setUserAnswer(null);
+    setIsAnswered(false);
+  };
+
+  if (loading) {
+    return (
+      <div className="">
+        <p>Loading Quiz...</p>
+      </div>
+    );
+  }
+  if (error) {
+    return (
+      <div className="quiz-container">
+        <p>{error}</p>
+      </div>
+    );
+  }
 
   return (
-    <div className='quiz-container'>
-        <button onClick={() => setActiveQuestion(prev => prev - 1 < 0 ? 0 : prev - 1)}>Prev Question</button>
-         {quiz && quiz.map((quiz,index) => {
-            return <div className={`question ${activeQuestion === index ? 'activeQuestion' : null}`}>
-                <span>Question: {quiz.question}</span>  
-                <div> <span>Answer: {quiz.answer}</span></div> 
-            </div>
-            
-         })}
-         
-        <button onClick={() => setActiveQuestion(prev => prev + 1 > quiz.length - 1 ? prev : prev + 1)} >Next Question</button>
+    <div className="quiz-container">
+      <h1>Quiz</h1>
+      <div className="navigation-buttons">
+        <button onClick={handlePrevQuestion} disabled={activeQuestion === 0}>
+          Prev Question
+        </button>
+        <button onClick={handleNextQuestion} disabled={activeQuestion === quiz.length - 1}>
+          Next Question
+        </button>
+      </div>
+      <div className={`question ${isAnswered ? 'answered' : ''}`}>
+        <span>Question: {quiz[activeQuestion].question}</span>
+        <div className="choices">
+          {quiz[activeQuestion].choices.map((choice, idx) => (
+            <button
+              key={idx}
+              onClick={() => handleChoiceSelection(choice)}
+              disabled={isAnswered}
+            >
+              {choice}
+            </button>
+          ))}
+        </div>
+        {isAnswered && (
+          <div className="answer">
+            <span>
+              {userAnswer === quiz[activeQuestion].answer ? 'Correct!' : `Incorrect! The correct answer is ${quiz[activeQuestion].answer}.`}
+            </span>
+          </div>
+        )}
+      </div>
+      <div className="score">
+        <span>Score: {score}/{quiz.length}</span>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Quiz
+export default Quiz;

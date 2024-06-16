@@ -1,8 +1,50 @@
-
-.question {
-    display: none;
-   
-}
-.question.activeQuestion {
-    display: block;
-}
+.quiz-container {
+    margin: 0 auto;
+    max-width: 600px;
+    text-align: center;
+  }
+  
+  .navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .question {
+    margin-bottom: 20px;
+  }
+  
+  .choices {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+  }
+  
+  .choices button {
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .choices button.correct {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .choices button.incorrect {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .answer {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  .score {
+    margin-top: 20px;
+    font-size: 1.2em;
+  }
+  
